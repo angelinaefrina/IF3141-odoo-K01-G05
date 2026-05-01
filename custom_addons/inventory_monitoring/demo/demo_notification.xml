@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ============================================================ -->
+        <!--  Demo Notifications — visible to Supervisor                   -->
+        <!--  Depends on: demo_material.xml                                -->
+        <!-- ============================================================ -->
+
+        <!-- Notifikasi stok di bawah batas minimum -->
+        <record id="notif_minyak_low" model="inventory.monitoring.notification">
+            <field name="name">Peringatan: Stok Minyak Goreng Rendah</field>
+            <field name="material_id" ref="material_minyak_goreng"/>
+            <field name="message">
+                Stok Minyak Goreng saat ini 4.5 liter, di bawah batas minimum 5.0 liter.
+                Segera lakukan reorder untuk menghindari kehabisan bahan.
+            </field>
+            <field name="date">2025-04-28 08:00:00</field>
+        </record>
+
+        <record id="notif_bawang_low" model="inventory.monitoring.notification">
+            <field name="name">Peringatan: Stok Bawang Merah Mendekati Minimum</field>
+            <field name="material_id" ref="material_bawang_merah"/>
+            <field name="message">
+                Stok Bawang Merah saat ini 3.0 kg, mendekati batas minimum 1.0 kg.
+                Pantau pemakaian dan pertimbangkan restocking dalam waktu dekat.
+            </field>
+            <field name="date">2025-04-29 09:30:00</field>
+        </record>
+
+        <record id="notif_stok_masuk" model="inventory.monitoring.notification">
+            <field name="name">Info: Stok Beras Berhasil Diperbarui</field>
+            <field name="material_id" ref="material_beras"/>
+            <field name="message">
+                Penerimaan stok inbound sebesar 20 kg Beras berhasil dicatat
+                oleh tim dapur pada tanggal 27 April 2025. Stok saat ini: 50 kg.
+            </field>
+            <field name="date">2025-04-27 14:00:00</field>
+        </record>
+
+    </data>
+</odoo>

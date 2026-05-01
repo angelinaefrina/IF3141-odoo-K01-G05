@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ============================================================ -->
+        <!--  Demo Reports — visible to Manager only                       -->
+        <!-- ============================================================ -->
+
+        <record id="report_april_2025" model="inventory.monitoring.report">
+            <field name="name">Laporan Inventaris — April 2025</field>
+            <field name="date_from">2025-04-01</field>
+            <field name="date_to">2025-04-30</field>
+            <field name="notes">
+                Ringkasan inventaris bulan April 2025.
+                - Total bahan aktif: 8 item
+                - Item di bawah minimum: 1 (Minyak Goreng)
+                - Inbound terbesar: Beras (+20 kg, 27 Apr)
+                - Waste tercatat: Telur (-12 butir, 25 Apr)
+                Rekomendasi: Lakukan reorder Minyak Goreng sebelum 5 Mei 2025.
+            </field>
+        </record>
+
+        <record id="report_maret_2025" model="inventory.monitoring.report">
+            <field name="name">Laporan Inventaris — Maret 2025</field>
+            <field name="date_from">2025-03-01</field>
+            <field name="date_to">2025-03-31</field>
+            <field name="notes">
+                Ringkasan inventaris bulan Maret 2025.
+                - Total bahan aktif: 8 item
+                - Tidak ada item di bawah minimum sepanjang bulan
+                - Inbound terbesar: Tepung Terigu (+15 kg, 10 Mar)
+                - Waste tercatat: Gula Pasir (-2 kg, 22 Mar)
+                Kondisi stok bulan ini terkendali dengan baik.
+            </field>
+        </record>
+
+    </data>
+</odoo>

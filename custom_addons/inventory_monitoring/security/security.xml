@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ============================================================ -->
+        <!--  Application Category                                          -->
+        <!-- ============================================================ -->
+        <record id="module_category_inventory_monitoring" model="ir.module.category">
+            <field name="name">Inventory Monitoring</field>
+            <field name="description">Category for all Inventory Monitoring access groups.</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!--  Security Groups                                               -->
+        <!-- ============================================================ -->
+
+        <!-- Group: Kitchen Team -->
+        <!-- Responsibilities: Manage Stocks, Handle Stock Inbound, Handle Stock Waste -->
+        <!-- Stock access (stock.move / stock.move.line) is inherited from stock.group_stock_user -->
+        <record id="group_inventory_kitchen_team" model="res.groups">
+            <field name="name">Kitchen Team</field>
+            <field name="category_id" ref="module_category_inventory_monitoring"/>
+            <field name="implied_ids" eval="[(4, ref('stock.group_stock_user'))]"/>
+            <field name="comment">
+                Kitchen Team members can manage stock movements, handle inbound stock,
+                and record stock waste. Stock access (stock.move / stock.move.line) is
+                inherited via stock.group_stock_user. They also have read/update access
+                to materials.
+            </field>
+        </record>
+
+        <!-- Group: Head Chef -->
+        <!-- Responsibilities: Manage Recipes, Set Min Stock -->
+        <record id="group_inventory_head_chef" model="res.groups">
+            <field name="name">Head Chef</field>
+            <field name="category_id" ref="module_category_inventory_monitoring"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">
+                Head Chef can manage recipes and recipe lines, and set minimum stock
+                levels for materials.
+            </field>
+        </record>
+
+        <!-- Group: Supervisor -->
+        <!-- Responsibilities: Receive Notifications -->
+        <record id="group_inventory_supervisor" model="res.groups">
+            <field name="name">Supervisor</field>
+            <field name="category_id" ref="module_category_inventory_monitoring"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">
+                Supervisors have read-only access to materials and notifications
+                to monitor inventory alerts.
+            </field>
+        </record>
+
+        <!-- Group: Manager -->
+        <!-- Responsibilities: View Report -->
+        <record id="group_inventory_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="module_category_inventory_monitoring"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">
+                Managers have read-only access to inventory reports.
+            </field>
+        </record>
+
+    </data>
+</odoo>

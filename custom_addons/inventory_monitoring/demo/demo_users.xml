@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ============================================================ -->
+        <!--  Demo Users — one account per security group                  -->
+        <!-- ============================================================ -->
+
+        <!-- Kitchen Team User -->
+        <record id="user_kitchen_budi" model="res.users">
+            <field name="name">Budi Santoso</field>
+            <field name="login">budi.kitchen@demo.com</field>
+            <field name="password">kitchen123</field>
+            <field name="email">budi.kitchen@demo.com</field>
+            <field name="groups_id" eval="[
+                (4, ref('inventory_monitoring.group_inventory_kitchen_team')),
+            ]"/>
+        </record>
+
+        <!-- Head Chef User -->
+        <record id="user_chef_sari" model="res.users">
+            <field name="name">Sari Dewi</field>
+            <field name="login">sari.chef@demo.com</field>
+            <field name="password">chef123</field>
+            <field name="email">sari.chef@demo.com</field>
+            <field name="groups_id" eval="[
+                (4, ref('inventory_monitoring.group_inventory_head_chef')),
+                (4, ref('base.group_user'))
+            ]"/>
+        </record>
+
+        <!-- Supervisor User -->
+        <record id="user_supervisor_andi" model="res.users">
+            <field name="name">Andi Wijaya</field>
+            <field name="login">andi.supervisor@demo.com</field>
+            <field name="password">supervisor123</field>
+            <field name="email">andi.supervisor@demo.com</field>
+            <field name="groups_id" eval="[
+                (4, ref('inventory_monitoring.group_inventory_supervisor')),
+                (4, ref('base.group_user'))
+            ]"/>
+        </record>
+
+        <!-- Manager User -->
+        <record id="user_manager_rina" model="res.users">
+            <field name="name">Rina Kusuma</field>
+            <field name="login">rina.manager@demo.com</field>
+            <field name="password">manager123</field>
+            <field name="email">rina.manager@demo.com</field>
+            <field name="groups_id" eval="[
+                (4, ref('inventory_monitoring.group_inventory_manager')),
+                (4, ref('base.group_user'))
+            ]"/>
+        </record>
+
+    </data>
+</odoo>

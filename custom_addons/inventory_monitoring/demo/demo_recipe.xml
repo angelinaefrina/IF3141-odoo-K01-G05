@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ============================================================ -->
+        <!--  Demo Recipes — managed by Head Chef                          -->
+        <!--  Depends on: demo_material.xml                                -->
+        <!-- ============================================================ -->
+
+        <!-- Recipe 1: Nasi Goreng -->
+        <record id="recipe_nasi_goreng" model="inventory.monitoring.recipe">
+            <field name="name">Nasi Goreng Spesial</field>
+        </record>
+        <record id="recipe_line_ng_beras" model="inventory.monitoring.recipe.line">
+            <field name="recipe_id" ref="recipe_nasi_goreng"/>
+            <field name="material_id" ref="material_beras"/>
+            <field name="quantity">0.3</field>
+        </record>
+        <record id="recipe_line_ng_telur" model="inventory.monitoring.recipe.line">
+            <field name="recipe_id" ref="recipe_nasi_goreng"/>
+            <field name="material_id" ref="material_telur"/>
+            <field name="quantity">2.0</field>
+        </record>
+        <record id="recipe_line_ng_minyak" model="inventory.monitoring.recipe.line">
+            <field name="recipe_id" ref="recipe_nasi_goreng"/>
+            <field name="material_id" ref="material_minyak_goreng"/>
+            <field name="quantity">0.05</field>
+        </record>
+        <record id="recipe_line_ng_kecap" model="inventory.monitoring.recipe.line">
+            <field name="recipe_id" ref="recipe_nasi_goreng"/>
+            <field name="material_id" ref="material_kecap"/>
+            <field name="quantity">0.02</field>
+        </record>
+        <record id="recipe_line_ng_bawang" model="inventory.monitoring.recipe.line">
+            <field name="recipe_id" ref="recipe_nasi_goreng"/>
+            <field name="material_id" ref="material_bawang_merah"/>
+            <field name="quantity">0.05</field>
+        </record>
+        <record id="recipe_line_ng_garam" model="inventory.monitoring.recipe.line">
+            <field name="recipe_id" ref="recipe_nasi_goreng"/>
+            <field name="material_id" ref="material_garam"/>
+            <field name="quantity">0.005</field>
+        </record>
+
+        <!-- Recipe 2: Martabak Manis -->
+        <record id="recipe_martabak" model="inventory.monitoring.recipe">
+            <field name="name">Martabak Manis</field>
+        </record>
+        <record id="recipe_line_mt_tepung" model="inventory.monitoring.recipe.line">
+            <field name="recipe_id" ref="recipe_martabak"/>
+            <field name="material_id" ref="material_tepung"/>
+            <field name="quantity">0.25</field>
+        </record>
+        <record id="recipe_line_mt_telur" model="inventory.monitoring.recipe.line">
+            <field name="recipe_id" ref="recipe_martabak"/>
+            <field name="material_id" ref="material_telur"/>
+            <field name="quantity">3.0</field>
+        </record>
+        <record id="recipe_line_mt_gula" model="inventory.monitoring.recipe.line">
+            <field name="recipe_id" ref="recipe_martabak"/>
+            <field name="material_id" ref="material_gula"/>
+            <field name="quantity">0.1</field>
+        </record>
+        <record id="recipe_line_mt_minyak" model="inventory.monitoring.recipe.line">
+            <field name="recipe_id" ref="recipe_martabak"/>
+            <field name="material_id" ref="material_minyak_goreng"/>
+            <field name="quantity">0.03</field>
+        </record>
+
+        <!-- Recipe 3: Sup Ayam -->
+        <record id="recipe_sup_ayam" model="inventory.monitoring.recipe">
+            <field name="name">Sup Ayam</field>
+        </record>
+        <record id="recipe_line_sa_garam" model="inventory.monitoring.recipe.line">
+            <field name="recipe_id" ref="recipe_sup_ayam"/>
+            <field name="material_id" ref="material_garam"/>
+            <field name="quantity">0.01</field>
+        </record>
+        <record id="recipe_line_sa_bawang" model="inventory.monitoring.recipe.line">
+            <field name="recipe_id" ref="recipe_sup_ayam"/>
+            <field name="material_id" ref="material_bawang_merah"/>
+            <field name="quantity">0.08</field>
+        </record>
+
+    </data>
+</odoo>
