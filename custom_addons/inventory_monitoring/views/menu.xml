@@ -12,5 +12,13 @@
                   parent="menu_inventory_monitoring_root" 
                   action="action_inventory_material" 
                   sequence="10"/>
+
+        <!-- Sub Menu: Vendor Orders -->
+        <menuitem id="menu_vendor_order"
+                  name="Vendor Orders"
+                  parent="menu_inventory_monitoring_root"
+                  action="action_vendor_order"
+                  sequence="20"
+                  groups="inventory_monitoring.group_inventory_kitchen_team,inventory_monitoring.group_inventory_manager,inventory_monitoring.group_inventory_supervisor"/>
     </data>
 </odoo>

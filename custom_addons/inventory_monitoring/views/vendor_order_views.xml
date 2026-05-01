@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Sequence for order reference -->
+        <record id="seq_vendor_order" model="ir.sequence">
+            <field name="name">Vendor Order Sequence</field>
+            <field name="code">inventory.monitoring.vendor.order</field>
+            <field name="prefix">VO/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <!-- List View -->
+        <record id="view_vendor_order_tree" model="ir.ui.view">
+            <field name="name">inventory.monitoring.vendor.order.tree</field>
+            <field name="model">inventory.monitoring.vendor.order</field>
+            <field name="arch" type="xml">
+                <tree string="Vendor Orders"
+                      decoration-info="state == 'draft'"
+                      decoration-warning="state == 'confirmed'"
+                      decoration-success="state == 'received'"
+                      decoration-muted="state == 'cancelled'">
+                    <field name="name"/>
+                    <field name="vendor_name"/>
+                    <field name="order_date"/>
+                    <field name="state" widget="badge"
+                           decoration-info="state == 'draft'"
+                           decoration-warning="state == 'confirmed'"
+                           decoration-success="state == 'received'"
+                           decoration-danger="state == 'cancelled'"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_vendor_order_form" model="ir.ui.view">
+            <field name="name">inventory.monitoring.vendor.order.form</field>
+            <field name="model">inventory.monitoring.vendor.order</field>
+            <field name="arch" type="xml">
+                <form string="Vendor Order">
+                    <header>
+                        <button name="action_confirm" string="Confirm" type="object"
+                                class="btn-primary"
+                                invisible="state != 'draft'"/>
+                        <button name="action_receive" string="Receive Stock" type="object"
+                                class="btn-success"
+                                invisible="state != 'confirmed'"/>
+                        <button name="action_cancel" string="Cancel" type="object"
+                                invisible="state in ('received', 'cancelled')"/>
+                        <button name="action_reset_draft" string="Reset to Draft" type="object"
+                                invisible="state != 'cancelled'"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,confirmed,received"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="vendor_name"
+                                       readonly="state != 'draft'"/>
+                                <field name="order_date"
+                                       readonly="state != 'draft'"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Order Lines">
+                                <field name="order_line_ids">
+                                    <tree editable="bottom">
+                                        <field name="material_id" readonly="parent.state != 'draft'"/>
+                                        <field name="uom" optional="show"/>
+                                        <field name="qty_ordered" readonly="parent.state != 'draft'"/>
+                                        <field name="qty_received" readonly="parent.state in ('draft', 'received', 'cancelled')"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Notes">
+                                <field name="notes" placeholder="Catatan tambahan..."
+                                       readonly="state in ('received', 'cancelled')"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_vendor_order_search" model="ir.ui.view">
+            <field name="name">inventory.monitoring.vendor.order.search</field>
+            <field name="model">inventory.monitoring.vendor.order</field>
+            <field name="arch" type="xml">
+                <search string="Search Vendor Orders">
+                    <field name="name"/>
+                    <field name="vendor_name"/>
+                    <filter string="Draft" name="filter_draft" domain="[('state','=','draft')]"/>
+                    <filter string="Confirmed" name="filter_confirmed" domain="[('state','=','confirmed')]"/>
+                    <filter string="Received" name="filter_received" domain="[('state','=','received')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Vendor" name="group_by_vendor" context="{'group_by':'vendor_name'}"/>
+                        <filter string="Status" name="group_by_state" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_vendor_order" model="ir.actions.act_window">
+            <field name="name">Vendor Orders</field>
+            <field name="res_model">inventory.monitoring.vendor.order</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_vendor_order_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Belum ada order vendor.
+                </p>
+                <p>Buat order baru untuk menambah stok dari vendor.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>
