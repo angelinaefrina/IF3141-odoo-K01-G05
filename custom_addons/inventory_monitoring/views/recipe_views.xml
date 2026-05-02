@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Tree View: Daftar semua resep -->
+        <record model="ir.ui.view" id="view_recipe_tree">
+            <field name="name">inventory.monitoring.recipe.tree</field>
+            <field name="model">inventory.monitoring.recipe</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <tree string="Recipes">
+                    <field name="name" string="Recipe Name"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View: Detail resep + tabel bahan baku -->
+        <record model="ir.ui.view" id="view_recipe_form">
+            <field name="name">inventory.monitoring.recipe.form</field>
+            <field name="model">inventory.monitoring.recipe</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <form string="Recipe">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"
+                                       string="Recipe Name"
+                                       placeholder="e.g. Nasi Goreng Spesial"
+                                       required="True"/>
+                            </h1>
+                        </div>
+
+                        <notebook>
+                            <page string="Ingredients" name="ingredients">
+                                <field name="line_ids" string="Ingredients">
+                                    <tree editable="bottom" string="Recipe Lines">
+                                        <field name="material_id"
+                                               string="Material"
+                                               required="True"
+                                               options="{'no_create': True}"/>
+                                        <field name="quantity"
+                                               string="Quantity (per serving)"
+                                               required="True"/>
+                                        <field name="uom"
+                                                string="Unit"
+                                                readonly="True"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record model="ir.ui.view" id="view_recipe_search">
+            <field name="name">inventory.monitoring.recipe.search</field>
+            <field name="model">inventory.monitoring.recipe</field>
+            <field name="arch" type="xml">
+                <search string="Search Recipes">
+                    <field name="name" string="Recipe Name"/>
+                    <filter string="Has Ingredients" name="has_ingredients"
+                            domain="[('line_ids', '!=', False)]"/>
+                    <filter string="No Ingredients Yet" name="no_ingredients"
+                            domain="[('line_ids', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_inventory_recipe" model="ir.actions.act_window">
+            <field name="name">Recipes</field>
+            <field name="res_model">inventory.monitoring.recipe</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_recipe_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Belum ada resep tercatat.
+                </p>
+                <p>
+                    Tambahkan resep baru dan pastikan untuk mengisi nama resep dan menambahkan bahan baku beserta jumlahnya agar dapat digunakan dalam perencanaan menu dan pemantauan stok bahan baku.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

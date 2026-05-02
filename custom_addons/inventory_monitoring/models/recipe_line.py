@@ -18,3 +18,9 @@ class RecipeLine(models.Model):
         required=True,
     )
     quantity = fields.Float(string='Quantity', default=1.0)
+    uom = fields.Char(
+        string='Unit',
+        related='material_id.uom',
+        readonly=True,
+        store=False,
+    )

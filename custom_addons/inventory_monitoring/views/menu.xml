@@ -20,5 +20,13 @@
                   action="action_vendor_order"
                   sequence="20"
                   groups="inventory_monitoring.group_inventory_kitchen_team,inventory_monitoring.group_inventory_manager,inventory_monitoring.group_inventory_supervisor"/>
+
+        <!-- Sub Menu: Recipes -->
+        <menuitem id="menu_inventory_recipe"
+                name="Recipes"
+                parent="menu_inventory_monitoring_root"
+                action="action_inventory_recipe"
+                sequence="15"
+                groups="inventory_monitoring.group_inventory_head_chef"/>
     </data>
 </odoo>

@@ -22,6 +22,7 @@
         'security/ir.model.access.csv',
         'views/material_views.xml',
         'views/vendor_order_views.xml',
+        'views/recipe_views.xml',
         'views/menu.xml',
         'demo/demo_users.xml',
         'demo/demo_material.xml',
