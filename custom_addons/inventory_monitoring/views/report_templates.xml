@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_inventory_stock_document">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2>Inventory Stock Report</h2>
+                    <p>
+                        <strong>Report:</strong>
+                        <span t-esc="doc.name"/>
+                    </p>
+                    <p>
+                        <strong>Period:</strong>
+                        <span t-esc="doc.date_from"/> - <span t-esc="doc.date_to"/>
+                    </p>
+                    <p>
+                        <strong>Generated:</strong>
+                        <span t-esc="doc.created_at"/>
+                    </p>
+                    <hr/>
+                    <pre t-esc="doc.notes" style="white-space: pre-wrap;"/>
+                </div>
+            </t>
+        </template>
+
+        <record id="report_inventory_stock" model="ir.actions.report">
+            <field name="name">Inventory Stock Report</field>
+            <field name="model">inventory.monitoring.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">inventory_monitoring.report_inventory_stock_document</field>
+            <field name="report_file">inventory_monitoring.report_inventory_stock_document</field>
+            <field name="binding_model_id" ref="model_inventory_monitoring_report"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

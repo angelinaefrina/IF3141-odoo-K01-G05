@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Search View -->
+        <record id="view_notification_search" model="ir.ui.view">
+            <field name="name">inventory.monitoring.notification.search</field>
+            <field name="model">inventory.monitoring.notification</field>
+            <field name="arch" type="xml">
+                <search string="Search Notifications">
+                    <field name="name"/>
+                    <field name="material_id"/>
+                    <field name="is_read"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Material" name="group_by_material" context="{'group_by':'material_id'}"/>
+                        <filter string="Read Status" name="group_by_read" context="{'group_by':'is_read'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Kanban View (Dashboard Style) -->
+        <record id="view_notification_kanban" model="ir.ui.view">
+            <field name="name">inventory.monitoring.notification.kanban</field>
+            <field name="model">inventory.monitoring.notification</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" sample="1">
+                    <field name="name"/>
+                    <field name="material_id"/>
+                    <field name="message"/>
+                    <field name="date"/>
+                    <field name="is_read"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="o_kanban_record_top mb-2">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title" style="font-size: 16px;">
+                                            <field name="name"/>
+                                        </strong>
+                                        <div class="text-muted">
+                                            <field name="material_id"/>
+                                        </div>
+                                    </div>
+                                    <div class="o_kanban_record_top_right">
+                                        <span t-if="record.is_read.raw_value" class="badge rounded-pill" style="background-color: #6c757d; color: white; padding: 4px 8px;">Read</span>
+                                        <span t-if="!record.is_read.raw_value" class="badge rounded-pill" style="background-color: #dc3545; color: white; padding: 4px 8px;">Unread</span>
+                                    </div>
+                                </div>
+                                <hr style="margin: 6px 0;"/>
+                                <div class="o_kanban_record_bottom mt-2">
+                                    <div class="oe_kanban_bottom_left">
+                                        <field name="message"/>
+                                    </div>
+                                </div>
+                                <div class="text-muted mt-2">
+                                    <field name="date"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- List View (Tree) -->
+        <record id="view_notification_tree" model="ir.ui.view">
+            <field name="name">inventory.monitoring.notification.tree</field>
+            <field name="model">inventory.monitoring.notification</field>
+            <field name="arch" type="xml">
+                <tree string="Notifications" decoration-danger="is_read == False" decoration-success="is_read == True" sample="1">
+                    <field name="name"/>
+                    <field name="material_id"/>
+                    <field name="date"/>
+                    <field name="is_read"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_notification_form" model="ir.ui.view">
+            <field name="name">inventory.monitoring.notification.form</field>
+            <field name="model">inventory.monitoring.notification</field>
+            <field name="arch" type="xml">
+                <form string="Notification">
+                    <header>
+                        <button name="mark_as_read" string="Mark as Read" type="object"
+                                class="btn-primary" attrs="{'invisible': [('is_read', '=', True)]}"/>
+                        <field name="is_read" readonly="1"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="material_id"/>
+                                <field name="date"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="message" widget="text"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action window -->
+        <record id="action_inventory_notification" model="ir.actions.act_window">
+            <field name="name">Notifications Dashboard</field>
+            <field name="res_model">inventory.monitoring.notification</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="view_notification_search"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Belum ada notifikasi.
+              </p>
+              <p>
+                Notifikasi akan muncul saat stok mencapai batas minimum.
+              </p>
+            </field>
+        </record>
+    </data>
+</odoo>

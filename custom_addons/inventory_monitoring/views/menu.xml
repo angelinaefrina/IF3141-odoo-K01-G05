@@ -28,5 +28,21 @@
                 action="action_inventory_recipe"
                 sequence="15"
                 groups="inventory_monitoring.group_inventory_head_chef"/>
+
+        <!-- Sub Menu: Notifications -->
+        <menuitem id="menu_inventory_notification"
+            name="Notifications"
+            parent="menu_inventory_monitoring_root"
+            action="action_inventory_notification"
+            sequence="30"
+            groups="inventory_monitoring.group_inventory_supervisor"/>
+
+        <!-- Sub Menu: Reports -->
+        <menuitem id="menu_inventory_report"
+            name="Reports"
+            parent="menu_inventory_monitoring_root"
+            action="action_inventory_report"
+            sequence="40"
+            groups="inventory_monitoring.group_inventory_manager"/>
     </data>
 </odoo>
