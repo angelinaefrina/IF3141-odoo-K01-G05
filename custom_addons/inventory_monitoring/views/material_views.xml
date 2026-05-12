@@ -22,29 +22,33 @@
             <field name="arch" type="xml">
                 <kanban class="o_kanban_mobile" sample="1">
                     <field name="name"/>
-                    <field name="current_stock"/>
+                    <field name="qty_on_hand"/>
                     <field name="min_stock"/>
                     <field name="uom"/>
                     <templates>
                         <t t-name="kanban-box">
-                            <div t-attf-class="oe_kanban_global_click">
+                            <div class="oe_kanban_global_click">
                                 <div class="o_kanban_record_top mb-2">
                                     <div class="o_kanban_record_headings">
-                                        <strong class="o_kanban_record_title" style="font-size: 16px;"><field name="name"/></strong>
+                                        <strong class="o_kanban_record_title" style="font-size: 16px;"><t t-esc="record.name.raw_value"/></strong>
                                     </div>
                                     <div class="o_kanban_record_top_right">
-                                        <span t-if="record.current_stock.raw_value &lt; record.min_stock.raw_value" class="badge rounded-pill" style="background-color: #dc3545; color: white; padding: 4px 8px;">Low Stock</span>
-                                        <span t-if="record.current_stock.raw_value &gt;= record.min_stock.raw_value" class="badge rounded-pill" style="background-color: #198754; color: white; padding: 4px 8px;">In Stock</span>
+                                        <t t-if="record.qty_on_hand.raw_value &lt; record.min_stock.raw_value">
+                                            <span class="badge rounded-pill" style="background-color: #dc3545; color: white; padding: 4px 8px;">Low Stock</span>
+                                        </t>
+                                        <t t-else="">
+                                            <span class="badge rounded-pill" style="background-color: #198754; color: white; padding: 4px 8px;">In Stock</span>
+                                        </t>
                                     </div>
                                 </div>
                                 <hr style="margin: 6px 0;"/>
                                 <div class="o_kanban_record_bottom mt-2">
                                     <div class="oe_kanban_bottom_left">
-                                        <span class="text-muted">Min: <field name="min_stock"/> <field name="uom"/></span>
+                                        <span class="text-muted">Min: <t t-esc="record.min_stock.raw_value"/> <t t-esc="record.uom.raw_value"/></span>
                                     </div>
                                     <div class="oe_kanban_bottom_right">
-                                        <strong t-attf-style="color: {{ record.current_stock.raw_value &lt; record.min_stock.raw_value ? '#dc3545' : '#198754' }}; font-size: 15px;">
-                                            <field name="current_stock"/> <field name="uom"/>
+                                        <strong t-attf-style="color: {{ record.qty_on_hand.raw_value &lt; record.min_stock.raw_value ? '#dc3545' : '#198754' }}; font-size: 15px;">
+                                            <t t-esc="record.qty_on_hand.raw_value"/> <t t-esc="record.uom.raw_value"/>
                                         </strong>
                                     </div>
                                 </div>
@@ -60,9 +64,9 @@
             <field name="name">inventory.monitoring.material.tree</field>
             <field name="model">inventory.monitoring.material</field>
             <field name="arch" type="xml">
-                <tree string="Materials" decoration-danger="current_stock &lt; min_stock" decoration-success="current_stock &gt;= min_stock" sample="1">
+                <tree string="Materials" decoration-danger="qty_on_hand &lt; min_stock" decoration-success="qty_on_hand &gt;= min_stock" sample="1">
                     <field name="name"/>
-                    <field name="current_stock" decoration-bf="1"/>
+                    <field name="qty_on_hand" decoration-bf="1"/>
                     <field name="min_stock"/>
                     <field name="uom"/>
                 </tree>
@@ -87,7 +91,7 @@
                                 <field name="uom"/>
                             </group>
                             <group>
-                                <field name="current_stock"/>
+                                <field name="qty_on_hand"/>
                                 <field name="min_stock"/>
                             </group>
                         </group>

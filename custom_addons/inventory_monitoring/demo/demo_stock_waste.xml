@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="waste_telur_pecah" model="inventory.monitoring.stock.waste">
+            <field name="material_id" ref="material_telur"/>
+            <field name="quantity">2.0</field>
+            <field name="description">Telur pecah saat dipindahkan dari rak ke meja dapur</field>
+        </record>
+
+        <record id="waste_beras_tumpah" model="inventory.monitoring.stock.waste">
+            <field name="material_id" ref="material_beras"/>
+            <field name="quantity">0.5</field>
+            <field name="description">Beras tumpah ke lantai dan kotor saat menakar porsi</field>
+        </record>
+    </data>
+</odoo>

@@ -28,5 +28,21 @@
                 action="action_inventory_recipe"
                 sequence="15"
                 groups="inventory_monitoring.group_inventory_head_chef"/>
+
+         <!-- Sub Menu: Stock Waste Logs -->
+        <menuitem id="menu_stock_waste" 
+                  name="Stock Waste Logs" 
+                  parent="menu_inventory_monitoring_root" 
+                  action="action_stock_waste" 
+                  sequence="30"
+                  groups="inventory_monitoring.group_inventory_kitchen_team,inventory_monitoring.group_inventory_head_chef"/>
+
+        <!-- Sub Menu: POS Transactions -->
+        <menuitem id="menu_pos_transaction" 
+                  name="POS Transactions" 
+                  parent="menu_inventory_monitoring_root" 
+                  action="action_pos_transaction" 
+                  sequence="40"
+                  groups="inventory_monitoring.group_inventory_kitchen_team,inventory_monitoring.group_inventory_head_chef"/>        
     </data>
 </odoo>

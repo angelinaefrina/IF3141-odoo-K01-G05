@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="pos_trans_nasi_goreng_01" model="inventory.monitoring.pos.transaction">
+            <field name="recipe_id" ref="recipe_nasi_goreng"/>
+            <field name="quantity_sold">3</field>
+        </record>
+
+        <record id="pos_trans_martabak_01" model="inventory.monitoring.pos.transaction">
+            <field name="recipe_id" ref="recipe_martabak"/>
+            <field name="quantity_sold">2</field>
+        </record>
+    </data>
+</odoo>
