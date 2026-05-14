@@ -8,8 +8,14 @@
             <field name="arch" type="xml">
                 <search string="Search Materials">
                     <field name="name"/>
+                    <filter string="Critical" name="filter_critical" domain="[('stock_priority','=','critical')]"/>
+                    <filter string="Warning" name="filter_warning" domain="[('stock_priority','=','warning')]"/>
+                    <filter string="Low Stock" name="filter_low_stock" domain="[('stock_status','=','low')]"/>
+                    <filter string="Safe Stock" name="filter_safe_stock" domain="[('stock_status','=','safe')]"/>
                     <group expand="0" string="Group By">
                         <filter string="Unit of Measure" name="group_by_uom" context="{'group_by':'uom'}"/>
+                        <filter string="Priority" name="group_by_priority" context="{'group_by':'stock_priority'}"/>
+                        <filter string="Stock Status" name="group_by_status" context="{'group_by':'stock_status'}"/>
                     </group>
                 </search>
             </field>
@@ -20,42 +26,74 @@
             <field name="name">inventory.monitoring.material.kanban</field>
             <field name="model">inventory.monitoring.material</field>
             <field name="arch" type="xml">
-                <kanban class="o_kanban_mobile" sample="1">
+                <kanban class="o_kanban_mobile im_dashboard_kanban" sample="1">
                     <field name="name"/>
                     <field name="qty_on_hand"/>
                     <field name="min_stock"/>
                     <field name="uom"/>
+                    <field name="stock_gap"/>
+                    <field name="reorder_qty"/>
+                    <field name="stock_status"/>
+                    <field name="stock_coverage_pct"/>
+                    <field name="stock_priority"/>
+                    <field name="stock_priority_rank"/>
+                    <progressbar field="stock_priority" colors="{&quot;critical&quot;: &quot;danger&quot;, &quot;warning&quot;: &quot;warning&quot;, &quot;safe&quot;: &quot;success&quot;}"/>
                     <templates>
                         <t t-name="kanban-box">
-                            <div class="oe_kanban_global_click">
+                            <div t-attf-class="oe_kanban_global_click im_dashboard_card im_material_card">
                                 <div class="o_kanban_record_top mb-2">
                                     <div class="o_kanban_record_headings">
-                                        <strong class="o_kanban_record_title" style="font-size: 16px;"><t t-esc="record.name.raw_value"/></strong>
+                                        <strong class="o_kanban_record_title im_dashboard_title"><field name="name"/></strong>
                                     </div>
                                     <div class="o_kanban_record_top_right">
-                                        <t t-if="record.qty_on_hand.raw_value &lt; record.min_stock.raw_value">
-                                            <span class="badge rounded-pill" style="background-color: #dc3545; color: white; padding: 4px 8px;">Low Stock</span>
-                                        </t>
-                                        <t t-else="">
-                                            <span class="badge rounded-pill" style="background-color: #198754; color: white; padding: 4px 8px;">In Stock</span>
-                                        </t>
+                                        <span t-if="record.stock_priority.raw_value == 'critical'" class="badge rounded-pill im_badge im_badge_danger">Critical</span>
+                                        <span t-if="record.stock_priority.raw_value == 'warning'" class="badge rounded-pill im_badge im_badge_warning">Warning</span>
+                                        <span t-if="record.stock_priority.raw_value == 'safe'" class="badge rounded-pill im_badge im_badge_success">Safe</span>
+                                        <span t-if="record.current_stock.raw_value &lt; record.min_stock.raw_value" class="badge rounded-pill im_badge im_badge_danger">Low Stock</span>
+                                        <span t-if="record.current_stock.raw_value &gt;= record.min_stock.raw_value" class="badge rounded-pill im_badge im_badge_success">In Stock</span>
                                     </div>
                                 </div>
-                                <hr style="margin: 6px 0;"/>
+                                <div class="im_dashboard_divider"/>
                                 <div class="o_kanban_record_bottom mt-2">
                                     <div class="oe_kanban_bottom_left">
-                                        <span class="text-muted">Min: <t t-esc="record.min_stock.raw_value"/> <t t-esc="record.uom.raw_value"/></span>
+                                        <span class="text-muted im_meta_text">Minimum: <field name="min_stock"/> <field name="uom"/></span>
+                                        <div class="text-muted im_meta_text mt-1">Gap: <field name="stock_gap"/> <field name="uom"/></div>
                                     </div>
                                     <div class="oe_kanban_bottom_right">
-                                        <strong t-attf-style="color: {{ record.qty_on_hand.raw_value &lt; record.min_stock.raw_value ? '#dc3545' : '#198754' }}; font-size: 15px;">
-                                            <t t-esc="record.qty_on_hand.raw_value"/> <t t-esc="record.uom.raw_value"/>
+                                        <strong t-attf-class="im_stock_value #{record.current_stock.raw_value &lt; record.min_stock.raw_value ? 'im_stock_low' : 'im_stock_ok'}">
+                                            <field name="current_stock"/> <field name="uom"/>
                                         </strong>
                                     </div>
+                                </div>
+                                <div class="im_coverage_block">
+                                    <div class="im_meta_text">Coverage vs Minimum</div>
+                                    <div class="im_coverage_bar">
+                                        <div t-attf-class="im_coverage_fill #{record.stock_priority.raw_value == 'critical' ? 'is_critical' : (record.stock_priority.raw_value == 'warning' ? 'is_warning' : 'is_safe')}"
+                                             t-att-style="'width: ' + Math.max(0, Math.min(100, record.stock_coverage_pct.raw_value)) + '%;'"/>
+                                    </div>
+                                    <div class="im_meta_text"><field name="stock_coverage_pct"/>%</div>
+                                </div>
+                                <div class="im_dashboard_divider"/>
+                                <div class="im_meta_text">
+                                    Suggested Reorder: <strong class="im_stock_low"><field name="reorder_qty"/> <field name="uom"/></strong>
                                 </div>
                             </div>
                         </t>
                     </templates>
                 </kanban>
+            </field>
+        </record>
+
+        <!-- Graph View -->
+        <record id="view_material_graph" model="ir.ui.view">
+            <field name="name">inventory.monitoring.material.graph</field>
+            <field name="model">inventory.monitoring.material</field>
+            <field name="arch" type="xml">
+                <graph string="Stock Overview" type="bar">
+                    <field name="stock_priority"/>
+                    <field name="current_stock" type="measure"/>
+                    <field name="reorder_qty" type="measure"/>
+                </graph>
             </field>
         </record>
 
@@ -66,8 +104,13 @@
             <field name="arch" type="xml">
                 <tree string="Materials" decoration-danger="qty_on_hand &lt; min_stock" decoration-success="qty_on_hand &gt;= min_stock" sample="1">
                     <field name="name"/>
-                    <field name="qty_on_hand" decoration-bf="1"/>
+                    <field name="stock_priority" widget="badge"/>
+                    <field name="stock_status" widget="badge"/>
+                    <field name="current_stock" decoration-bf="1"/>
                     <field name="min_stock"/>
+                    <field name="stock_coverage_pct"/>
+                    <field name="stock_gap"/>
+                    <field name="reorder_qty"/>
                     <field name="uom"/>
                 </tree>
             </field>
@@ -93,6 +136,11 @@
                             <group>
                                 <field name="qty_on_hand"/>
                                 <field name="min_stock"/>
+                                <field name="stock_priority" readonly="1"/>
+                                <field name="stock_status" readonly="1"/>
+                                <field name="stock_coverage_pct" readonly="1"/>
+                                <field name="stock_gap" readonly="1"/>
+                                <field name="reorder_qty" readonly="1"/>
                             </group>
                         </group>
                     </sheet>
@@ -104,7 +152,7 @@
         <record id="action_inventory_material" model="ir.actions.act_window">
             <field name="name">Materials Dashboard</field>
             <field name="res_model">inventory.monitoring.material</field>
-            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_mode">kanban,graph,tree,form</field>
             <field name="search_view_id" ref="view_material_search"/>
             <field name="help" type="html">
               <p class="o_view_nocontent_smiling_face">
@@ -114,6 +162,22 @@
                 Tambahkan bahan baku baru untuk memantau stok dapur Anda.
               </p>
             </field>
+        </record>
+
+        <record id="action_inventory_material_kanban_only" model="ir.actions.act_window">
+            <field name="name">Material Cards</field>
+            <field name="res_model">inventory.monitoring.material</field>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="view_material_kanban"/>
+            <field name="search_view_id" ref="view_material_search"/>
+        </record>
+
+        <record id="action_inventory_material_graph_stock" model="ir.actions.act_window">
+            <field name="name">Stock Summary</field>
+            <field name="res_model">inventory.monitoring.material</field>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="view_material_graph"/>
+            <field name="search_view_id" ref="view_material_search"/>
         </record>
     </data>
 </odoo>

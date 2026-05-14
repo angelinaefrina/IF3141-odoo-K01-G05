@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Root Menu: Kitchen Inventory -->
+        <!-- Root Menu: Arturo Cafe App -->
         <menuitem id="menu_inventory_monitoring_root" 
-                  name="Kitchen Inventory" 
+                  name="Arturo Cafe App" 
                   sequence="10"/>
 
         <!-- Sub Menu: Materials -->
@@ -44,5 +44,21 @@
                   action="action_pos_transaction" 
                   sequence="40"
                   groups="inventory_monitoring.group_inventory_kitchen_team,inventory_monitoring.group_inventory_head_chef"/>        
+
+        <!-- Sub Menu: Notifications -->
+        <menuitem id="menu_inventory_notification"
+            name="Notifications"
+            parent="menu_inventory_monitoring_root"
+            action="action_inventory_notification"
+            sequence="30"
+            groups="inventory_monitoring.group_inventory_supervisor"/>
+
+        <!-- Sub Menu: Reports -->
+        <menuitem id="menu_inventory_report"
+            name="Reports"
+            parent="menu_inventory_monitoring_root"
+            action="action_inventory_report"
+            sequence="40"
+            groups="inventory_monitoring.group_inventory_manager"/>
     </data>
 </odoo>

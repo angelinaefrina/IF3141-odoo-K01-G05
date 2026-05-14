@@ -85,5 +85,24 @@
             </field>
         </record>
 
+        <record id="view_recipe_line_outflow_pie" model="ir.ui.view">
+            <field name="name">inventory.monitoring.recipe.line.outflow.pie</field>
+            <field name="model">inventory.monitoring.recipe.line</field>
+            <field name="arch" type="xml">
+                <graph string="Outflow Allocation by Recipe" type="pie">
+                    <field name="recipe_id"/>
+                    <field name="quantity" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_inventory_material_outflow_pie" model="ir.actions.act_window">
+            <field name="name">Outflow Allocation</field>
+            <field name="res_model">inventory.monitoring.recipe.line</field>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="view_recipe_line_outflow_pie"/>
+            <field name="context">{'graph_measure': 'quantity'}</field>
+        </record>
+
     </data>
 </odoo>
