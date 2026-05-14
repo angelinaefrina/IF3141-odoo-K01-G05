@@ -6,8 +6,8 @@
             <field name="model_id" ref="model_inventory_monitoring_notification"/>
             <field name="state">code</field>
             <field name="code">model.check_thresholds()</field>
-            <field name="interval_number">1</field>
-            <field name="interval_type">hours</field>
+            <field name="interval_number">5</field>
+            <field name="interval_type">minutes</field>
             <field name="numbercall">-1</field>
             <field name="doall">False</field>
             <field name="user_id" ref="base.user_admin"/>

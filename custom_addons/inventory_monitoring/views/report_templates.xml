@@ -3,23 +3,27 @@
     <data>
         <template id="report_inventory_stock_document">
             <t t-call="web.external_layout">
-                <div class="page">
-                    <h2>Inventory Stock Report</h2>
-                    <p>
-                        <strong>Report:</strong>
-                        <span t-esc="doc.name"/>
-                    </p>
-                    <p>
-                        <strong>Period:</strong>
-                        <span t-esc="doc.date_from"/> - <span t-esc="doc.date_to"/>
-                    </p>
-                    <p>
-                        <strong>Generated:</strong>
-                        <span t-esc="doc.created_at"/>
-                    </p>
-                    <hr/>
-                    <pre t-esc="doc.notes" style="white-space: pre-wrap;"/>
-                </div>
+                <main>
+                    <t t-foreach="docs" t-as="doc">
+                        <div class="page">
+                            <h2>Inventory Stock Report</h2>
+                            <p>
+                                <strong>Report:</strong>
+                                <span t-esc="doc.name"/>
+                            </p>
+                            <p>
+                                <strong>Period:</strong>
+                                <span t-esc="doc.date_from"/> - <span t-esc="doc.date_to"/>
+                            </p>
+                            <p>
+                                <strong>Generated:</strong>
+                                <span t-esc="doc.created_at"/>
+                            </p>
+                            <hr/>
+                            <pre t-esc="doc.notes" style="white-space: pre-wrap;"/>
+                        </div>
+                    </t>
+                </main>
             </t>
         </template>
 

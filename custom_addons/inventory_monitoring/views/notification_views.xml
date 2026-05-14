@@ -84,7 +84,7 @@
                 <form string="Notification">
                     <header>
                         <button name="mark_as_read" string="Mark as Read" type="object"
-                                class="btn-primary" attrs="{'invisible': [('is_read', '=', True)]}"/>
+                                class="btn-primary" invisible="is_read"/>
                         <field name="is_read" readonly="1"/>
                     </header>
                     <sheet>
