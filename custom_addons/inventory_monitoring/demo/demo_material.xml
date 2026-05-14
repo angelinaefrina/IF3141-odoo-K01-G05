@@ -9,56 +9,56 @@
         <record id="material_beras" model="inventory.monitoring.material">
             <field name="name">Beras</field>
             <field name="uom">kg</field>
-            <field name="qty_on_hand">50.0</field>
+            <field name="current_stock">50.0</field>
             <field name="min_stock">10.0</field>
         </record>
 
         <record id="material_minyak_goreng" model="inventory.monitoring.material">
             <field name="name">Minyak Goreng</field>
             <field name="uom">liter</field>
-            <field name="qty_on_hand">4.5</field>
+            <field name="current_stock">4.5</field>
             <field name="min_stock">5.0</field>
         </record>
 
         <record id="material_telur" model="inventory.monitoring.material">
             <field name="name">Telur Ayam</field>
             <field name="uom">butir</field>
-            <field name="qty_on_hand">120.0</field>
+            <field name="current_stock">120.0</field>
             <field name="min_stock">24.0</field>
         </record>
 
         <record id="material_tepung" model="inventory.monitoring.material">
             <field name="name">Tepung Terigu</field>
             <field name="uom">kg</field>
-            <field name="qty_on_hand">25.0</field>
+            <field name="current_stock">25.0</field>
             <field name="min_stock">5.0</field>
         </record>
 
         <record id="material_gula" model="inventory.monitoring.material">
             <field name="name">Gula Pasir</field>
             <field name="uom">kg</field>
-            <field name="qty_on_hand">12.0</field>
+            <field name="current_stock">12.0</field>
             <field name="min_stock">3.0</field>
         </record>
 
         <record id="material_garam" model="inventory.monitoring.material">
             <field name="name">Garam</field>
             <field name="uom">kg</field>
-            <field name="qty_on_hand">8.0</field>
+            <field name="current_stock">8.0</field>
             <field name="min_stock">1.0</field>
         </record>
 
         <record id="material_kecap" model="inventory.monitoring.material">
             <field name="name">Kecap Manis</field>
             <field name="uom">botol</field>
-            <field name="qty_on_hand">6.0</field>
+            <field name="current_stock">6.0</field>
             <field name="min_stock">2.0</field>
         </record>
 
         <record id="material_bawang_merah" model="inventory.monitoring.material">
             <field name="name">Bawang Merah</field>
             <field name="uom">kg</field>
-            <field name="qty_on_hand">3.0</field>
+            <field name="current_stock">3.0</field>
             <field name="min_stock">1.0</field>
         </record>
 
