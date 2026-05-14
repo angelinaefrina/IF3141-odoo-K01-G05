@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Root Menu: Kitchen Inventory -->
+        <!-- Root Menu: Arturo Cafe App -->
         <menuitem id="menu_inventory_monitoring_root" 
-                  name="Kitchen Inventory" 
+                  name="Arturo Cafe App" 
                   sequence="10"/>
 
         <!-- Sub Menu: Materials -->
