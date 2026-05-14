@@ -47,7 +47,7 @@ class VendorOrder(models.Model):
     def action_receive(self):
         for rec in self:
             for line in rec.order_line_ids:
-                line.material_id.qty_on_hand += line.qty_received
+                line.material_id.current_stock += line.qty_received
             rec.state = 'received'
 
     def action_cancel(self):
