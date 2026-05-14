@@ -24,6 +24,22 @@
             </field>
         </record>
 
+        <record id="view_stock_waste_search" model="ir.ui.view">
+            <field name="name">inventory.monitoring.stock.waste.search</field>
+            <field name="model">inventory.monitoring.stock.waste</field>
+            <field name="arch" type="xml">
+                <search string="Cari Log Limbah">
+                    <field name="material_id" string="Bahan Baku"/>
+                    <field name="description" string="Deskripsi/Keterangan"/>
+                    
+                    <group expand="0" string="Group By">
+                        <filter string="Bahan Baku" name="group_by_material" context="{'group_by':'material_id'}"/>
+                        <filter string="Tanggal" name="group_by_date" context="{'group_by':'date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
         <record id="view_stock_waste_tree" model="ir.ui.view">
             <field name="name">inventory.monitoring.stock.waste.tree</field>
             <field name="model">inventory.monitoring.stock.waste</field>
@@ -42,6 +58,7 @@
             <field name="name">Stock Waste Logs</field>
             <field name="res_model">inventory.monitoring.stock.waste</field>
             <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_stock_waste_search"/>
         </record>
     </data>
 </odoo>

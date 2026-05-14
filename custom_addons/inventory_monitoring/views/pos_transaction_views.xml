@@ -17,6 +17,22 @@
             </field>
         </record>
 
+        <record id="view_pos_transaction_search" model="ir.ui.view">
+            <field name="name">inventory.monitoring.pos.transaction.search</field>
+            <field name="model">inventory.monitoring.pos.transaction</field>
+            <field name="arch" type="xml">
+                <search string="Cari Transaksi POS">
+                    <field name="recipe_id" string="Menu Terjual"/>
+                    <field name="date" string="Tanggal Transaksi"/>
+                    
+                    <group expand="0" string="Group By">
+                        <filter string="Menu Terjual" name="group_by_recipe" context="{'group_by':'recipe_id'}"/>
+                        <filter string="Tanggal" name="group_by_date" context="{'group_by':'date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
         <record id="view_pos_transaction_tree" model="ir.ui.view">
             <field name="name">inventory.monitoring.pos.transaction.tree</field>
             <field name="model">inventory.monitoring.pos.transaction</field>
@@ -33,6 +49,7 @@
             <field name="name">Simulate POS Transaction</field>
             <field name="res_model">inventory.monitoring.pos.transaction</field>
             <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_pos_transaction_search"/>
         </record>
     </data>
 </odoo>

@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from odoo.exceptions import UserError
 
 class PosTransaction(models.Model):
     _name = 'inventory.monitoring.pos.transaction'
@@ -10,6 +11,12 @@ class PosTransaction(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
+        for vals in vals_list:
+            qty_sold = vals.get('quantity_sold', 0)
+
+            if qty_sold <= 0:
+                raise UserError("Jumlah yang dijual harus lebih besar dari 0!")
+            
         records = super(PosTransaction, self).create(vals_list)
         for record in records:
             if record.recipe_id:
