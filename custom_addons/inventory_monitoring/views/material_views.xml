@@ -28,7 +28,7 @@
             <field name="arch" type="xml">
                 <kanban class="o_kanban_mobile im_dashboard_kanban" sample="1">
                     <field name="name"/>
-                    <field name="current_stock"/>
+                    <field name="qty_on_hand"/>
                     <field name="min_stock"/>
                     <field name="uom"/>
                     <field name="stock_gap"/>
@@ -102,7 +102,7 @@
             <field name="name">inventory.monitoring.material.tree</field>
             <field name="model">inventory.monitoring.material</field>
             <field name="arch" type="xml">
-                <tree string="Materials" decoration-danger="current_stock &lt; min_stock" decoration-success="current_stock &gt;= min_stock" sample="1">
+                <tree string="Materials" decoration-danger="qty_on_hand &lt; min_stock" decoration-success="qty_on_hand &gt;= min_stock" sample="1">
                     <field name="name"/>
                     <field name="stock_priority" widget="badge"/>
                     <field name="stock_status" widget="badge"/>
@@ -134,7 +134,7 @@
                                 <field name="uom"/>
                             </group>
                             <group>
-                                <field name="current_stock"/>
+                                <field name="qty_on_hand"/>
                                 <field name="min_stock"/>
                                 <field name="stock_priority" readonly="1"/>
                                 <field name="stock_status" readonly="1"/>

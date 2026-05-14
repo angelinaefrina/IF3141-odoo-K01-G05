@@ -9,7 +9,7 @@ class Material(models.Model):
 
     name = fields.Char(string='Material Name', required=True)
     uom = fields.Char(string='Unit of Measure')
-    current_stock = fields.Float(string='Current Stock', default=0.0)
+    qty_on_hand = fields.Float(string='Current Stock', default=0.0)
     min_stock = fields.Float(string='Minimum Stock', default=0.0)
     stock_gap = fields.Float(
         string='Stock Gap',
