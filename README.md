@@ -1,106 +1,55 @@
-# IF3141 Sistem Informasi - Odoo Setup
+# IF3141 Sistem Informasi - README
 
-## Introduction
+## Identitas Kelompok
 
-Odoo merupakan *Enterprise Resource Planning System* yang mampu melakukan implementasi modul modul kustom untuk menyelesaikan permasalahan proses bisnis pada suatu perusahaan.
+- Nama Kelompok: SI Bahagia
+- Nomor Kelompok: G05
+- K-01
 
-Odoo memberikan opsi *on-premise solution* sehingga developer dapat melakukan implementasi kustom modul pada local environment.
+## Anggota Kelompok
 
-Repository ini diperuntukkan untuk Tugas Besar IF3141 Sistem Informasi. Untuk memulai silakan melakukan fork dan membuat repository private untuk workspace setiap kelompok.
+- Raka Daffa Iftikhaar - 13523018
+- Joel Hotlan Haris Siahaan - 13523025
+- Nadhif Radityo Nugroho - 13523045
+- Mayla Yaffa Ludmilla - 13523050
+- Angelina Efrina Prahastaputri - 13523060
 
+## Nama Sistem dan Perusahaan
 
-## Pre-requisites
-Odoo diimplementasikan dengan Python environment dan database PostgreSQL. Repository ini sudah membungkus service aplikasi dan database melalui Docker.
+- Nama Sistem: Arturo Cafe App (Inventory Monitoring Module)
+- Nama Perusahaan: Arturo Cafe
 
-Sebelum memulai, pastikan dependency berikut sudah terpasang:
+## Deskripsi Sistem
 
-1. Docker Desktop
-	- Download: https://www.docker.com/products/docker-desktop/
-2. Python 3.11
-	- Digunakan untuk virtual environment (venv) pada proses development modul
+Arturo Cafe App adalah modul kustom Odoo untuk memantau dan mengelola inventori dapur di Arturo Cafe. Sistem ini mengatur data material, resep, transaksi POS, dan pergerakan stok secara terpusat, sehingga tim operasional dapat memastikan ketersediaan bahan baku sesuai kebutuhan harian. Akses fitur dibatasi melalui role-based access control agar setiap peran hanya melihat dan mengolah data yang relevan.
 
-## Struktur Direktori
+Sistem menyediakan alur kerja dari pencatatan bahan masuk, pengurangan stok akibat penggunaan atau waste, hingga pembuatan laporan inventori. Notifikasi dan laporan periodik membantu supervisor serta manajer memantau kondisi stok dan mengambil keputusan dengan cepat. Dengan demikian, proses dapur menjadi lebih terukur dan transparan.
 
-- `/config`
-	- Untuk menyimpan konfigurasi Odoo
-- `/custom_addons`
-	- Tempat pengerjaan modul kustom
-- `/dump`
-	- Database dump yang dapat diakses scripts untuk proses import/export
-- `/scripts`
-	- Untuk melakukan database migration
-- `docker-compose.yml`
-	- Orchestration service Odoo dan PostgreSQL
+## Cara Menjalankan Sistem
 
-## Step-by-step Installation
+| No  | Langkah                                                   | Perintah/Kredensial                                                                | Screenshot expected result                 |
+| --- | --------------------------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------ |
+| 1   | Pastikan Docker Desktop sudah berjalan.                   | -                                                                                  | ![Docker started](docs/screenshots/1.png)  |
+| 2   | Jalankan service Odoo dan PostgreSQL.                     | `docker compose up -d`                                                             | ![Docker running](docs/screenshots/2.png)  |
+| 3   | (Opsional, jika belum ada database) Import database demo. | Windows: `scripts\import_db.cmd`<br>macOS/Linux: `./scripts/import_db.sh`          | ![Import DB](docs/screenshots/3.png)       |
+| 4   | Buka aplikasi di browser: http://localhost:8069           | -                                                                                  | ![Odoo page](docs/screenshots/4.png)       |
+| 5   | Login sebagai admin.                                      | Username: `admin`<br>Password: `admin`                                             | ![Logged in](docs/screenshots/5.png)       |
+| 6   | Aktifkan Developer Mode dan update daftar aplikasi.       | Settings -> Developer Tools -> Activate Developer Mode<br>Apps -> Update Apps List | ![Developer mode](docs/screenshots/6.png)  |
+| 7   | Install modul "Arturo Cafe App" dan akses menu modul.     | -                                                                                  | ![Modul terpasang](docs/screenshots/7.png) |
+| 8   | Login menggunakan role pengguna demo untuk mencoba fitur. | -                                                                                  | ![Success](docs/screenshots/8.png)         |
 
-1. Jalankan service Odoo dan PostgreSQL:
+## Kredensial Role
 
-	```bash
-	docker compose up -d
-	```
+Pastikan demo data aktif saat instalasi modul atau gunakan database dump agar akun demo tersedia.
 
-2. Buka aplikasi pada browser:
-	- http://localhost:8069
+| Role         | Nama          | Login                    | Password      |
+| ------------ | ------------- | ------------------------ | ------------- |
+| Admin        | Administrator | admin                    | admin         |
+| Kitchen Team | Budi Santoso  | budi.kitchen@demo.com    | kitchen123    |
+| Head Chef    | Sari Dewi     | sari.chef@demo.com       | chef123       |
+| Supervisor   | Andi Wijaya   | andi.supervisor@demo.com | supervisor123 |
+| Manager      | Rina Kusuma   | rina.manager@demo.com    | manager123    |
 
-3. Login menggunakan kredensial default:
-	- Username: `admin`
-	- Password: `admin`
+## Kesimpulan dan Saran
 
-4. Aktifkan mode developer:
-	- Masuk ke **Settings**
-	- Nyalakan **Developer Mode / Developer Access**
-
-5. Buat Python virtual environment pada workspace:
-
-	```bash
-	python3.11 -m venv .venv
-	source .venv/bin/activate
-	pip install --upgrade pip
-	pip install -r requirements.txt
-	```
-
-6. Implementasikan modul pada folder:
-	- `custom_addons/`
-
-7. Setelah implementasi modul selesai, lakukan update daftar aplikasi:
-	- Masuk ke menu **Apps**
-	- Pilih **Update Apps List**
-
-8. Jika melakukan perubahan terhadap isi modul (modifying database), jangan lupa lakukan langkah database migration dengan mengikuti step di heading bawah ini.
-
-## Database Migration
-
-Odoo menggunakan local database pada implementasinya. Maka dari itu dibutuhkan migration system yang dapat dilakukan melakukan **dump db** atau **import db**. Sebelum melakukan migration jangan lupa untuk selalu mematikan service odoo & databasenya dengan menjalankan :
-
-```bash 
-docker compose down
-```
-
-Apabila terdapat perubahan pada database dan perubahan tersebut ingin diteruskan ke anggota tim lain, lakukan export database terlebih dahulu menggunakan script pada folder `scripts`.
-
-- macOS/Linux:
-
-  ```bash
-  ./scripts/export_db.sh
-  ```
-
-- Windows:
-
-  ```bat
-  scripts\export_db.cmd
-  ```
-
-Untuk melanjutkan pengerjaan dari hasil perubahan database rekan tim, lakukan import database terlebih dahulu :
-
-- macOS/Linux:
-
-  ```bash
-  ./scripts/import_db.sh
-  ```
-
-- Windows:
-
-  ```bat
-  scripts\import_db.cmd
-  ```
+Sistem ini membantu Arturo Cafe mengelola stok dapur secara lebih rapi, terukur, dan aman melalui pembagian peran yang jelas. Ke depannya, sistem dapat ditingkatkan dengan fitur analitik prediksi kebutuhan bahan baku, integrasi pemasok, dan dashboard performa operasional agar pengambilan keputusan semakin cepat dan berbasis data.
