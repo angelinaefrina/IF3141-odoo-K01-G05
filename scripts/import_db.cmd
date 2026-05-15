@@ -54,7 +54,7 @@ echo Restoring database from: %IN_FILE%
 
 if exist "%FS_FILE%" (
 	echo Restoring filestore from: %FS_FILE%
-	%DC% run --rm -v odoo-web-data:/filestore alpine sh -c "rm -rf /filestore/* && tar xzf - -C /filestore" < "%FS_FILE%" || goto :error
+	%DC% run --no-TTY --rm -v odoo-web-data:/filestore alpine sh -c "rm -rf /filestore/* && tar xzf - -C /filestore" < "%FS_FILE%"
 ) else (
 	echo Warning: No filestore backup found at %FS_FILE%, skipping.
 )
